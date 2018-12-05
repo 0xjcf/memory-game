@@ -36,15 +36,18 @@ function shuffle(array) {
   return array;
 }
 
+// multiplying the list by two and merging the list together
 const shuffledList = shuffle([...listOfCards, ...listOfCards]);
-
+// creating a fragment to append child elements to
 const fragment = document.createDocumentFragment();
-
+// creating the elements dynamically with a for of loop
 for (const card of shuffledList) {
   const listItem = document.createElement("li");
   listItem.className = "card";
+
   const item = document.createElement("i");
   item.className = `fa fa-${card}`;
+
   listItem.appendChild(item);
 
   fragment.appendChild(listItem);
@@ -54,6 +57,12 @@ const deck = document.querySelector(".deck");
 
 deck.appendChild(fragment);
 
+function flipAndOpen(e) {
+  const target = e.target;
+  target.classList.add("open", "show");
+}
+
+deck.addEventListener("click", e => flipAndOpen(e));
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
