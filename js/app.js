@@ -54,11 +54,14 @@ const deck = document.querySelector(".deck");
 deck.appendChild(fragment);
 // click event to open and show card
 function flipAndOpen(e) {
-  const target = e.target;
-  target.classList.add("open", "show");
-  moveCount++
-  const moves = document.querySelector('.moves');
-  moves.textContent = moveCount;
+  const card = e.target;
+  card.classList.add("open", "show");
+  moveCount++;
+  const moves = document.querySelector(".moves");
+  // Making Move "singular" or "plural" based on count
+  moveCount === 1
+    ? (moves.textContent = `${moveCount} Move`)
+    : (moves.textContent = `${moveCount} Moves`);
 }
 deck.addEventListener("click", e => flipAndOpen(e));
 /*
