@@ -13,13 +13,10 @@ const listOfCards = [
 ];
 
 /*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
+ * Keep count of moves
  */
+let moveCount = 0;
 
-// Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
   var currentIndex = array.length,
     temporaryValue,
@@ -52,16 +49,17 @@ for (const card of shuffledList) {
 
   fragment.appendChild(listItem);
 }
-
+// selecting ul element with class "deck"
 const deck = document.querySelector(".deck");
-
 deck.appendChild(fragment);
-
+// click event to open and show card
 function flipAndOpen(e) {
   const target = e.target;
   target.classList.add("open", "show");
+  moveCount++
+  const moves = document.querySelector('.moves');
+  moves.textContent = moveCount;
 }
-
 deck.addEventListener("click", e => flipAndOpen(e));
 /*
  * set up the event listener for a card. If a card is clicked:
