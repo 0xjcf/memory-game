@@ -32,7 +32,7 @@ function shuffle(array) {
   return array;
 }
 
-// Multiply list by two and merge lists 
+// Multiply list by two and merge lists
 const shuffledList = shuffle([...listOfCards, ...listOfCards]);
 
 const fragment = document.createDocumentFragment();
@@ -56,14 +56,19 @@ function flipAndOpen(e) {
   const card = e.target;
   if (card.nodeName === "LI") {
     card.classList.add("open", "show");
-    moveCount++;
-    const moves = document.querySelector(".moves");
-    // Making Move "singular" or "plural" based on count
-    moveCount === 1
-      ? (moves.textContent = `${moveCount} Move`)
-      : (moves.textContent = `${moveCount} Moves`);
+    trackCount();
   }
 }
+// Increment move count
+function trackCount() {
+  moveCount++;
+  const moves = document.querySelector(".moves");
+  // Making Move "singular" or "plural" based on count
+  moveCount === 1
+    ? (moves.textContent = `${moveCount} Move`)
+    : (moves.textContent = `${moveCount} Moves`);
+}
+
 deck.addEventListener("click", e => flipAndOpen(e));
 
 /*
