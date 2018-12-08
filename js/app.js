@@ -12,6 +12,7 @@ const listOfCards = [
 
 // Keep count of moves
 let moveCount = 0;
+let openList = [];
 
 // Shuffle list of cards
 function shuffle(array) {
@@ -33,9 +34,9 @@ function shuffle(array) {
 // Multiply list by two and merge lists
 const shuffledList = shuffle([...listOfCards, ...listOfCards]);
 
-// Dynamically create cards and append to fragment -> deck
+// Create fragment for cards to append to
 const fragment = document.createDocumentFragment();
-
+// Dynamically create cards with for of loop
 for (const card of shuffledList) {
   const listItem = document.createElement("li");
   listItem.className = "card";
@@ -46,16 +47,19 @@ for (const card of shuffledList) {
   listItem.appendChild(item);
   fragment.appendChild(listItem);
 }
-
+// Append fragment to deck
 const deck = document.querySelector(".deck");
 deck.appendChild(fragment);
 
 // Handle click event
 function clickHandler(e) {
   const card = e.target;
+  const cardName = e.target.firstChild.classList[1];
+
   if (card.nodeName === "LI") {
     flipAndOpen(card);
     trackCount();
+    addToOpenList(cardName);
   }
 }
 
@@ -72,6 +76,19 @@ function trackCount() {
   moveCount === 1
     ? (moves.textContent = `${moveCount} Move`)
     : (moves.textContent = `${moveCount} Moves`);
+}
+
+// Add card to list of open listOfCards
+function addToOpenList(cardName) {
+  openList.push(cardName);
+  if (openList.length === 2){
+    compareCards(cardName)
+  }
+}
+
+function compareCards(cardName) {
+  console.log(openList)
+  openList = [];
 }
 
 deck.addEventListener("click", e => clickHandler(e));
