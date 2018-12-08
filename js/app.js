@@ -12,11 +12,10 @@ const listOfCards = [
   "bomb"
 ];
 
-/*
- * Keep count of moves
- */
+// Keep count of moves
 let moveCount = 0;
 
+// Shuffle list of cards
 function shuffle(array) {
   var currentIndex = array.length,
     temporaryValue,
@@ -33,11 +32,11 @@ function shuffle(array) {
   return array;
 }
 
-// multiplying the list by two and merging the list together
+// Multiply list by two and merge lists 
 const shuffledList = shuffle([...listOfCards, ...listOfCards]);
-// creating a fragment to append child elements to
+
 const fragment = document.createDocumentFragment();
-// creating the elements dynamically with a for of loop
+
 for (const card of shuffledList) {
   const listItem = document.createElement("li");
   listItem.className = "card";
@@ -46,27 +45,28 @@ for (const card of shuffledList) {
   item.className = `fa fa-${card}`;
 
   listItem.appendChild(item);
-
   fragment.appendChild(listItem);
 }
-// selecting ul element with class "deck"
+
 const deck = document.querySelector(".deck");
 deck.appendChild(fragment);
-// click event to open and show card
+
+// Click handler to flip and show cards
 function flipAndOpen(e) {
   const card = e.target;
-  card.classList.add("open", "show");
-  moveCount++;
-  const moves = document.querySelector(".moves");
-  // Making Move "singular" or "plural" based on count
-  moveCount === 1
-    ? (moves.textContent = `${moveCount} Move`)
-    : (moves.textContent = `${moveCount} Moves`);
+  if (card.nodeName === "LI") {
+    card.classList.add("open", "show");
+    moveCount++;
+    const moves = document.querySelector(".moves");
+    // Making Move "singular" or "plural" based on count
+    moveCount === 1
+      ? (moves.textContent = `${moveCount} Move`)
+      : (moves.textContent = `${moveCount} Moves`);
+  }
 }
 deck.addEventListener("click", e => flipAndOpen(e));
+
 /*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
  *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
