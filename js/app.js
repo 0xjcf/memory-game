@@ -20,7 +20,7 @@ const deck = document.querySelector(".deck");
 // Select restart import { connect } from 'react-redux'
 const restart = document.querySelector(".restart");
 // Select Move count
-let moves = document.querySelector(".moves");
+const moves = document.querySelector(".moves");
 
 // Shuffle list of cards
 function shuffle(array) {
@@ -57,8 +57,6 @@ function createCards(shuffledList) {
   // Append fragment to deck
   deck.appendChild(fragment);
 }
-
-createCards(shuffledList);
 
 // Handle click event
 function clickHandler(e) {
@@ -112,15 +110,24 @@ function hideCards(openCards) {
   }
 }
 
+function removeAStar() {
+  const stars = document.querySelector(".stars");
+  const solidStars = stars.querySelectorAll(".fa-star");
+  solidStars[solidStars.length - 1].remove();
+}
+
 function compareCards() {
   const openCards = deck.querySelectorAll(".show, .open");
   if (openList[0] === openList[1]) {
     keepCardsOpen(openCards);
   } else {
     hideCards(openCards);
+    removeAStar();
   }
   openList = [];
 }
+
+createCards(shuffledList);
 
 deck.addEventListener("click", e => clickHandler(e));
 
