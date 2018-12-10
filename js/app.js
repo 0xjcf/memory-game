@@ -81,13 +81,22 @@ function trackCount() {
 // Add card to list of open listOfCards
 function addToOpenList(cardName) {
   openList.push(cardName);
-  if (openList.length === 2){
-    compareCards(cardName)
+  if (openList.length === 2) {
+    compareCards();
   }
 }
 
-function compareCards(cardName) {
-  console.log(openList)
+function compareCards() {
+  const openCards = deck.querySelectorAll(".show, .open");
+  if (openList[0] === openList[1]) {
+    for (const card of openCards) {
+      card.classList.add("match");
+    }
+  } else {
+    for (const card of openCards) {
+      card.classList.remove("show", "open");
+    }
+  }
   openList = [];
 }
 
