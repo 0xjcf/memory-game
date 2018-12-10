@@ -129,12 +129,13 @@ deck.addEventListener("click", e => clickHandler(e));
  */
 
 restart.addEventListener("click", function() {
+  // set move count to 0
   moveCount = 0;
   moves.textContent = `${moveCount} Moves`;
-  // shuffledList = shuffle([...listOfCards, ...listOfCards]);
-  // const deckNodes = deck.childNodes;
-  // for (const node of deckNodes) {
-  //   console.log(node);
-  // }
-  // createCards(shuffledList);
+  // erase all cards from deck
+  deck.innerHTML = "";
+  // shuffleList again
+  shuffledList = shuffle([...listOfCards, ...listOfCards]);
+  // create cards with new set of shuffled cards
+  createCards(shuffledList);
 });
