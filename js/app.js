@@ -60,6 +60,30 @@ function createCards(shuffledList) {
   deck.appendChild(fragment);
 }
 
+function gameLost() {
+  const container = document.querySelector(".container");
+  container.innerHTML = "";
+  // create h1 "You lost... try again!"
+  const heading = document.createElement("h1");
+  heading.textContent = `You lost with ${moveCount} Moves`;
+  container.append(heading);
+  // create h2 "with moveCount"
+  const count = document.createElement("h2");
+  count.textContent = `Try Again!!`;
+  container.append(count);
+  // create button to play again
+  const playAgainButton = document.createElement("button");
+  playAgainButton.textContent = "Press to play again";
+  playAgainButton.classList.add("play-again");
+  container.append(playAgainButton);
+
+  // add "click" event listener to playAgainButton
+  playAgainButton.addEventListener("click", function() {
+    // reloading html to replay game
+    location.reload();
+  });
+}
+
 // Handle click event
 function clickHandler(e) {
   const card = e.target;
@@ -69,6 +93,10 @@ function clickHandler(e) {
     flipAndOpen(card);
     trackCount();
     addToOpenList(cardName);
+  }
+
+  if (stars.childElementCount === 0) {
+    gameLost();
   }
 }
 
@@ -114,7 +142,7 @@ function hideCards(openCards) {
 
 function removeAStar() {
   const solidStars = stars.querySelectorAll(".fa-star");
-  solidStars[solidStars.length - 1].remove();
+  solidStars[solidStars.length - 1].parentElement.remove();
 }
 
 function compareCards() {
