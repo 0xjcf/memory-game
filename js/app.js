@@ -86,16 +86,24 @@ function addToOpenList(cardName) {
   }
 }
 
+function keepCardsOpen(openCards) {
+  for (const card of openCards) {
+    card.classList.add("match");
+  }
+}
+
+function hideCards(openCards) {
+  for (const card of openCards) {
+    card.classList.remove("show", "open");
+  }
+}
+
 function compareCards() {
   const openCards = deck.querySelectorAll(".show, .open");
   if (openList[0] === openList[1]) {
-    for (const card of openCards) {
-      card.classList.add("match");
-    }
+    keepCardsOpen(openCards);
   } else {
-    for (const card of openCards) {
-      card.classList.remove("show", "open");
-    }
+    hideCards(openCards);
   }
   openList = [];
 }
