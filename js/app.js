@@ -90,22 +90,24 @@ function keepCardsOpen(openCards) {
   for (const card of openCards) {
     setTimeout(function() {
       card.classList.add("match");
-    }, 2000);
+      card.classList.remove("show", "open");
+    }, 0);
   }
 }
 
 function hideCards(openCards) {
   for (const card of openCards) {
+    card.classList.add("no-match");
     setTimeout(function() {
-      card.classList.remove("show", "open");
-    }, 2000);
+      card.classList.remove("show", "open", "no-match");
+    }, 1000);
   }
 }
 
 function compareCards() {
   const openCards = deck.querySelectorAll(".show, .open");
   if (openList[0] === openList[1]) {
-    skeepCardsOpen(openCards);
+    keepCardsOpen(openCards);
   } else {
     hideCards(openCards);
   }
