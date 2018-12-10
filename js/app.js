@@ -21,6 +21,8 @@ const deck = document.querySelector(".deck");
 const restart = document.querySelector(".restart");
 // Select Move count
 const moves = document.querySelector(".moves");
+// Select Solid Stars
+const stars = document.querySelector(".stars");
 
 // Shuffle list of cards
 function shuffle(array) {
@@ -111,7 +113,6 @@ function hideCards(openCards) {
 }
 
 function removeAStar() {
-  const stars = document.querySelector(".stars");
   const solidStars = stars.querySelectorAll(".fa-star");
   solidStars[solidStars.length - 1].remove();
 }
@@ -145,4 +146,14 @@ restart.addEventListener("click", function() {
   shuffledList = shuffle([...listOfCards, ...listOfCards]);
   // create cards with new set of shuffled cards
   createCards(shuffledList);
+  // delete all solidStars
+  stars.innerHTML = "";
+  // create 3 solidStars
+  for (let i = 0; i < 3; i++) {
+    const solidStars = document.createElement("li");
+    const starIcon = document.createElement("i");
+    starIcon.classList.add("fa", "fa-star");
+    solidStars.appendChild(starIcon);
+    stars.appendChild(solidStars);
+  }
 });
