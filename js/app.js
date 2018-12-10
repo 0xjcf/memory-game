@@ -14,9 +14,13 @@ let moveCount = 0;
 // List of cards that are flipped and open
 let openList = [];
 // Multiply list by two and merge lists
-const shuffledList = shuffle([...listOfCards, ...listOfCards]);
+let shuffledList = shuffle([...listOfCards, ...listOfCards]);
 // Select deck of cards
 const deck = document.querySelector(".deck");
+// Select restart import { connect } from 'react-redux'
+const restart = document.querySelector(".restart");
+// Select Move count
+let moves = document.querySelector(".moves");
 
 // Shuffle list of cards
 function shuffle(array) {
@@ -36,7 +40,7 @@ function shuffle(array) {
 }
 
 // Create and append cards to deck
-(function createCards() {
+function createCards(shuffledList) {
   // Create fragment for cards to append to
   const fragment = document.createDocumentFragment();
   // Dynamically create cards with for of loop
@@ -52,7 +56,9 @@ function shuffle(array) {
   }
   // Append fragment to deck
   deck.appendChild(fragment);
-})()
+}
+
+createCards(shuffledList);
 
 // Handle click event
 function clickHandler(e) {
@@ -74,7 +80,6 @@ function flipAndOpen(card) {
 // Increment move count
 function trackCount() {
   moveCount++;
-  const moves = document.querySelector(".moves");
   // Making Move "singular" or "plural" based on count
   moveCount === 1
     ? (moves.textContent = `${moveCount} Move`)
@@ -122,3 +127,14 @@ deck.addEventListener("click", e => clickHandler(e));
 /*
     + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+restart.addEventListener("click", function() {
+  moveCount = 0;
+  moves.textContent = `${moveCount} Moves`;
+  // shuffledList = shuffle([...listOfCards, ...listOfCards]);
+  // const deckNodes = deck.childNodes;
+  // for (const node of deckNodes) {
+  //   console.log(node);
+  // }
+  // createCards(shuffledList);
+});
