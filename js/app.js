@@ -13,6 +13,8 @@ const listOfCards = [
 let moveCount = 0;
 // List of cards that are flipped and open
 let openList = [];
+// List of matched pair of cards
+let matchedCardsList = [];
 // Multiply list by two and merge lists
 let shuffledList = shuffle([...listOfCards, ...listOfCards]);
 // Select deck of cards
@@ -63,14 +65,14 @@ function createCards(shuffledList) {
 function gameLost() {
   const container = document.querySelector(".container");
   container.innerHTML = "";
-  // create h1 "You lost... try again!"
-  const heading = document.createElement("h1");
-  heading.textContent = `You lost with ${moveCount} Moves`;
-  container.append(heading);
-  // create h2 "with moveCount"
-  const count = document.createElement("h2");
-  count.textContent = `Try Again!!`;
-  container.append(count);
+  // create <h2> "You lost... with # of moves!"
+  const mainHeading = document.createElement("h2");
+  mainHeading.textContent = `You lost with ${moveCount} Moves`;
+  container.append(mainHeading);
+  // create <p> "Try again"
+  const subHeading = document.createElement("p");
+  subHeading.textContent = `Try Again!!`;
+  container.append(subHeading);
   // create button to play again
   const playAgainButton = document.createElement("button");
   playAgainButton.textContent = "Press to play again";
@@ -85,7 +87,27 @@ function gameLost() {
 }
 
 function gameWon() {
-  console.log("game won!!");
+  const container = document.querySelector(".container");
+  container.innerHTML = "";
+  // create <h2> "You won!"
+  const mainHeading = document.createElement("h2");
+  mainHeading.textContent = `Congratulations! You won!`;
+  container.append(mainHeading);
+  // create <p> "Play again"
+  const subHeading = document.createElement("p");
+  subHeading.textContent = `You won with ${moveCount} Moves!`;
+  container.append(subHeading);
+  // create button to play again
+  const playAgainButton = document.createElement("button");
+  playAgainButton.textContent = "Press to play again";
+  playAgainButton.classList.add("play-again");
+  container.append(playAgainButton);
+
+  // add "click" event listener to playAgainButton
+  playAgainButton.addEventListener("click", function() {
+    // reloading html to replay game
+    location.reload();
+  });
 }
 
 function restart() {
@@ -113,12 +135,12 @@ function restart() {
 // Handle click event
 function clickHandler(e) {
   const card = e.target;
-  const matchedCards = deck.querySelectorAll(".match");
   // make sure user is unable to select a matched card
   const includesMatch = card.className.split(" ").includes("match");
 
   if (card.nodeName === "LI" && !includesMatch) {
-    const cardName = e.target.firstChild.classList[1];
+    // grab card className to compare to
+    const cardName = card.firstChild.classList[1];
 
     flipAndOpen(card);
     trackCount();
@@ -127,11 +149,9 @@ function clickHandler(e) {
 
   if (stars.childElementCount === 0) {
     gameLost();
+  } else if (matchedCardsList.length === 8) {
+    gameWon();
   }
-
-  // if (matchedCards.length === 16) {
-  //   gameWon();
-  // }
 }
 
 // Flip and show cards
@@ -152,7 +172,7 @@ function trackCount() {
 function addToOpenList(cardName) {
   openList.push(cardName);
   if (openList.length === 2) {
-    compareCards();
+    compareCards(cardName);
   }
 }
 
@@ -177,10 +197,12 @@ function removeAStar() {
   solidStars[solidStars.length - 1].parentElement.remove();
 }
 
-function compareCards() {
+function compareCards(cardName) {
   const openCards = deck.querySelectorAll(".show, .open");
   if (openList[0] === openList[1]) {
     keepCardsOpen(openCards);
+    // add matched cards to matchedCardsList to keep count
+    matchedCardsList.push(cardName);
   } else {
     hideCards(openCards);
     removeAStar();
@@ -191,9 +213,5 @@ function compareCards() {
 createCards(shuffledList);
 
 deck.addEventListener("click", e => clickHandler(e));
-
-/*
-    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
 
 restartButton.addEventListener("click", () => restart());
