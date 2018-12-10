@@ -9,13 +9,14 @@ const listOfCards = [
   "bicycle",
   "bomb"
 ];
-
 // Keep count of moves
 let moveCount = 0;
 // List of cards that are flipped and open
 let openList = [];
 // Multiply list by two and merge lists
 const shuffledList = shuffle([...listOfCards, ...listOfCards]);
+// Select deck of cards
+const deck = document.querySelector(".deck");
 
 // Shuffle list of cards
 function shuffle(array) {
@@ -34,22 +35,24 @@ function shuffle(array) {
   return array;
 }
 
-// Create fragment for cards to append to
-const fragment = document.createDocumentFragment();
-// Dynamically create cards with for of loop
-for (const card of shuffledList) {
-  const listItem = document.createElement("li");
-  listItem.className = "card";
+// Create and append cards to deck
+(function createCards() {
+  // Create fragment for cards to append to
+  const fragment = document.createDocumentFragment();
+  // Dynamically create cards with for of loop
+  for (const card of shuffledList) {
+    const listItem = document.createElement("li");
+    listItem.className = "card";
 
-  const item = document.createElement("i");
-  item.className = `fa fa-${card}`;
+    const item = document.createElement("i");
+    item.className = `fa fa-${card}`;
 
-  listItem.appendChild(item);
-  fragment.appendChild(listItem);
-}
-// Append fragment to deck
-const deck = document.querySelector(".deck");
-deck.appendChild(fragment);
+    listItem.appendChild(item);
+    fragment.appendChild(listItem);
+  }
+  // Append fragment to deck
+  deck.appendChild(fragment);
+})()
 
 // Handle click event
 function clickHandler(e) {
