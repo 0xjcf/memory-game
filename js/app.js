@@ -18,7 +18,7 @@ let shuffledList = shuffle([...listOfCards, ...listOfCards]);
 // Select deck of cards
 const deck = document.querySelector(".deck");
 // Select restart import { connect } from 'react-redux'
-const restart = document.querySelector(".restart");
+const restartButton = document.querySelector(".restart");
 // Select Move count
 const moves = document.querySelector(".moves");
 // Select Solid Stars
@@ -84,12 +84,42 @@ function gameLost() {
   });
 }
 
+function gameWon() {
+  console.log("game won!!");
+}
+
+function restart() {
+  // set move count to 0
+  moveCount = 0;
+  moves.textContent = `${moveCount} Moves`;
+  // erase all cards from deck
+  deck.innerHTML = "";
+  // shuffleList again
+  shuffledList = shuffle([...listOfCards, ...listOfCards]);
+  // create cards with new set of shuffled cards
+  createCards(shuffledList);
+  // delete all solidStars
+  stars.innerHTML = "";
+  // create 3 solidStars
+  for (let i = 0; i < 5; i++) {
+    const solidStars = document.createElement("li");
+    const starIcon = document.createElement("i");
+    starIcon.classList.add("fa", "fa-star");
+    solidStars.appendChild(starIcon);
+    stars.appendChild(solidStars);
+  }
+}
+
 // Handle click event
 function clickHandler(e) {
   const card = e.target;
-  const cardName = e.target.firstChild.classList[1];
+  const matchedCards = deck.querySelectorAll(".match");
+  // make sure user is unable to select a matched card
+  const includesMatch = card.className.split(" ").includes("match");
 
-  if (card.nodeName === "LI") {
+  if (card.nodeName === "LI" && !includesMatch) {
+    const cardName = e.target.firstChild.classList[1];
+
     flipAndOpen(card);
     trackCount();
     addToOpenList(cardName);
@@ -98,6 +128,10 @@ function clickHandler(e) {
   if (stars.childElementCount === 0) {
     gameLost();
   }
+
+  // if (matchedCards.length === 16) {
+  //   gameWon();
+  // }
 }
 
 // Flip and show cards
@@ -124,10 +158,8 @@ function addToOpenList(cardName) {
 
 function keepCardsOpen(openCards) {
   for (const card of openCards) {
-    setTimeout(function() {
-      card.classList.add("match");
-      card.classList.remove("show", "open");
-    }, 0);
+    card.classList.add("match");
+    card.classList.remove("show", "open");
   }
 }
 
@@ -164,24 +196,4 @@ deck.addEventListener("click", e => clickHandler(e));
     + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-restart.addEventListener("click", function() {
-  // set move count to 0
-  moveCount = 0;
-  moves.textContent = `${moveCount} Moves`;
-  // erase all cards from deck
-  deck.innerHTML = "";
-  // shuffleList again
-  shuffledList = shuffle([...listOfCards, ...listOfCards]);
-  // create cards with new set of shuffled cards
-  createCards(shuffledList);
-  // delete all solidStars
-  stars.innerHTML = "";
-  // create 3 solidStars
-  for (let i = 0; i < 3; i++) {
-    const solidStars = document.createElement("li");
-    const starIcon = document.createElement("i");
-    starIcon.classList.add("fa", "fa-star");
-    solidStars.appendChild(starIcon);
-    stars.appendChild(solidStars);
-  }
-});
+restartButton.addEventListener("click", () => restart());
