@@ -64,7 +64,7 @@ function createCards(shuffledList) {
   deck.appendChild(fragment);
 }
 
-function gameLost(timer) {
+function gameLost() {
   const container = document.querySelector(".container");
   container.innerHTML = "";
   // create <h2> "You lost... with # of moves!"
@@ -86,8 +86,6 @@ function gameLost(timer) {
     // reloading html to replay game
     location.reload();
   });
-
-  clearInterval(timer);
 }
 
 function gameWon() {
@@ -244,8 +242,8 @@ function compareCards(cardName) {
 function createTimer(min, display) {
   const start = Date.now();
 
-  function timer() {
-    const diff = min * 60 - (((Date.now() - start) / 1000) | 0);
+  const timer = setInterval(function() {
+    let diff = min * 60 - (((Date.now() - start) / 1000) | 0);
     let minutes = (diff / 60) | 0;
     let seconds = diff % 60 | 0;
 
@@ -258,14 +256,18 @@ function createTimer(min, display) {
     }
 
     if (diff <= 0) {
-      gameLost(timer);
+      // const timerID = timer;
+      clearInterval(timer);
+      gameLost();
     }
-  }
-  setInterval(timer, 1000);
+  });
+
+  setTimeout(timer, 1000);
 }
 
 function startGame() {
   createCards(shuffledList);
+  // create timer with 2 minutes
   createTimer(2, countDownTimer);
 }
 
