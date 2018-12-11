@@ -28,6 +28,12 @@ body {
   flex-direction: column;
 }
 
+header {
+  width: 250px;
+  height: 70px;
+  text-align: center;
+}
+
 h1 {
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
@@ -38,8 +44,8 @@ h1 {
  */
 
 .deck {
-  width: 660px;
-  min-height: 660px;
+  width: 640px;
+  min-height: 640px;
   background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
   padding: 32px;
   border-radius: 10px;
@@ -90,16 +96,21 @@ h1 {
  */
 
 .score-panel {
-  text-align: left;
-  width: 345px;
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
   margin-bottom: 10px;
+  width: 640px;
+  justify-content: center;
 }
 
 .score-panel .stars {
   margin: 0;
   padding: 0;
-  display: inline-block;
-  margin: 0 5px 0 0;
+  font-size: 2em;
+  display: flex;
+  width: 33.33%;
+  justify-content: space-evenly;
 }
 
 .score-panel .stars li {
@@ -108,7 +119,8 @@ h1 {
 }
 
 .score-panel .restart {
-  float: right;
+  display: flex;
+  justify-content: space-evenly;
   cursor: pointer;
 }
 
@@ -131,4 +143,28 @@ h1 {
 
 .play-again:focus {
   outline: #ffffff;
+}
+
+/* timer */
+.moves {
+  width: 33.33%;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.restart {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  width: 33.33%;
+}
+
+.repeat {
+  display: flex;
+  align-self: center;
+  font-size: 1.5em;
+}
+
+.timer {
+  font-size: 1.5em;
 }

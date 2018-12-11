@@ -17,6 +17,8 @@ let openList = [];
 let matchedCardsList = [];
 // Multiply list by two and merge lists
 let shuffledList = shuffle([...listOfCards, ...listOfCards]);
+// Select countDownTimer
+let countDownTimer = document.querySelector(".timer");
 // Select deck of cards
 const deck = document.querySelector(".deck");
 // Select restart icon
@@ -25,8 +27,6 @@ const restartButton = document.querySelector(".restart");
 const moves = document.querySelector(".moves");
 // Select Solid Stars
 const stars = document.querySelector(".stars");
-// Select countDownTimer
-const countDownTimer = document.querySelector(".timer");
 
 // Shuffle list of cards
 function shuffle(array) {
@@ -135,6 +135,23 @@ function restart() {
     solidStars.appendChild(starIcon);
     stars.appendChild(solidStars);
   }
+
+  // select and delete timers
+  const restartList = countDownTimer.parentElement.children;
+  for (const el of restartList) {
+    if (el.nodeName === "SPAN") {
+      el.remove();
+    }
+  }
+  // recreate countDownTimer Element
+  countDownTimer = document.createElement("span");
+  countDownTimer.setAttribute("class", "timer");
+  countDownTimer.textContent = "2:00";
+  // append to restart element
+  const restart = document.querySelector(".restart");
+  restart.appendChild(countDownTimer);
+  // create 2 min count down timer
+  createTimer(2, countDownTimer);
 }
 
 // Handle click event
@@ -234,17 +251,21 @@ function createTimer(min, display) {
 
     display.textContent = minutes + ":" + seconds;
 
+    if (diff <= 10) {
+      display.classList.add("timer", "warning");
+    }
+
     if (diff <= 0) {
       gameLost();
+      clearInterval(timer);
     }
   }
-  timer();
   setInterval(timer, 1000);
 }
 
 function startGame() {
   createCards(shuffledList);
-  createTimer(3, countDownTimer);
+  createTimer(2, countDownTimer);
 }
 
 startGame();
