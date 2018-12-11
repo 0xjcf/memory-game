@@ -137,8 +137,9 @@ function clickHandler(e) {
   const card = e.target;
   // make sure user is unable to select a matched card
   const includesMatch = card.className.split(" ").includes("match");
+  const includesShow = card.className.split(" ").includes("show");
 
-  if (card.nodeName === "LI" && !includesMatch) {
+  if (card.nodeName === "LI" && !includesMatch && !includesShow) {
     // grab card className to compare to
     const cardName = card.firstChild.classList[1];
 
