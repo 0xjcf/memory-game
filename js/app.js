@@ -25,6 +25,8 @@ const restartButton = document.querySelector(".restart");
 const moves = document.querySelector(".moves");
 // Select Solid Stars
 const stars = document.querySelector(".stars");
+// Select countDownTimer
+const countDownTimer = document.querySelector(".timer");
 
 // Shuffle list of cards
 function shuffle(array) {
@@ -95,7 +97,10 @@ function gameWon() {
   container.append(mainHeading);
   // create <p> "Play again"
   const subHeading = document.createElement("p");
-  subHeading.textContent = `You won with ${moveCount} Moves!`;
+  // grab to display number of stars remaining
+  const solidStars = stars.querySelectorAll(".fa-star");
+  subHeading.textContent = `With ${moveCount} Moves and
+  ${solidStars.length} stars remaining`;
   container.append(subHeading);
   // create button to play again
   const playAgainButton = document.createElement("button");
@@ -147,9 +152,12 @@ function clickHandler(e) {
     addToOpenList(cardName);
   }
 
-  if (stars.childElementCount === 0) {
-    gameLost();
-  } else if (matchedCardsList.length === 8) {
+  // Set difficulty to hard (game ends with 0 stars)
+  // if (stars.childElementCount === 0) {
+  //   gameLost();
+  // }
+
+  if (matchedCardsList.length === 8) {
     gameWon();
   }
 }
@@ -195,7 +203,9 @@ function hideCards(openCards) {
 
 function removeAStar() {
   const solidStars = stars.querySelectorAll(".fa-star");
-  solidStars[solidStars.length - 1].parentElement.remove();
+  if (solidStars.length > 0) {
+    solidStars[solidStars.length - 1].parentElement.remove();
+  }
 }
 
 function compareCards(cardName) {
@@ -211,7 +221,30 @@ function compareCards(cardName) {
   openList = [];
 }
 
+// create timer
+function createTimer(duration, display) {
+  const start = Date.now();
+
+  function timer() {
+    const diff = duration - (((Date.now() - start) / 1000) | 0);
+    let minutes = (diff / 60) | 0;
+    let seconds = diff % 60 | 0;
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    display.textContent = minutes + ":" + seconds;
+
+    if (diff <= 0) {
+      start = Date.now() + 1000;
+    }
+  }
+  timer();
+  setInterval(timer, 1000);
+}
+
 createCards(shuffledList);
+createTimer(60 * 5, countDownTimer);
 
 deck.addEventListener("click", e => clickHandler(e));
 
