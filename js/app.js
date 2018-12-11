@@ -268,7 +268,7 @@ function createTimer(min, display) {
 function startGame() {
   createCards(shuffledList);
   // create timer with 2 minutes
-  createTimer(.1, countDownTimer);
+  createTimer(2, countDownTimer);
 }
 
 startGame();
