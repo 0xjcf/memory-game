@@ -19,7 +19,7 @@ let matchedCardsList = [];
 let shuffledList = shuffle([...listOfCards, ...listOfCards]);
 // Select deck of cards
 const deck = document.querySelector(".deck");
-// Select restart import { connect } from 'react-redux'
+// Select restart icon
 const restartButton = document.querySelector(".restart");
 // Select Move count
 const moves = document.querySelector(".moves");
@@ -144,7 +144,6 @@ function clickHandler(e) {
     const cardName = card.firstChild.classList[1];
 
     flipAndOpen(card);
-    trackCount();
     addToOpenList(cardName);
   }
 
@@ -169,11 +168,12 @@ function trackCount() {
     : (moves.textContent = `${moveCount} Moves`);
 }
 
-// Add card to list of open listOfCards
+// Add card to list of openList
 function addToOpenList(cardName) {
   openList.push(cardName);
   if (openList.length === 2) {
     compareCards(cardName);
+    trackCount();
   }
 }
 
