@@ -9,7 +9,7 @@ The cards are arranged randomly with the symbol face down.
 - If the cards match, both cards stay flipped over.
 - If the cards do not match, both cards are flipped face down.
 - The game end when all cards have been correctly matched
-  or the timer has run out of time.
+  or the two minute timer has run out of time.
 
 *To download the project*
 - ```git clone git@github.com:JCFlores/memory-game.git```
