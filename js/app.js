@@ -222,30 +222,32 @@ function compareCards(cardName) {
 }
 
 // create timer
-function createTimer(duration, display) {
+function createTimer(min, display) {
   const start = Date.now();
 
   function timer() {
-    const diff = duration - (((Date.now() - start) / 1000) | 0);
+    const diff = min * 60 - (((Date.now() - start) / 1000) | 0);
     let minutes = (diff / 60) | 0;
     let seconds = diff % 60 | 0;
 
-    minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
     display.textContent = minutes + ":" + seconds;
 
     if (diff <= 0) {
-      start = Date.now() + 1000;
+      gameLost();
     }
   }
   timer();
   setInterval(timer, 1000);
 }
 
-createCards(shuffledList);
-createTimer(60 * 5, countDownTimer);
+function startGame() {
+  createCards(shuffledList);
+  createTimer(3, countDownTimer);
+}
 
+startGame();
 deck.addEventListener("click", e => clickHandler(e));
 
 restartButton.addEventListener("click", () => restart());
