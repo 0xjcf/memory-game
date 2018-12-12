@@ -218,7 +218,7 @@ function hideCards(openCards) {
 
 function removeAStar() {
   const solidStars = stars.querySelectorAll(".fa-star");
-  if (solidStars.length > 0) {
+  if (solidStars.length > 1) {
     solidStars[solidStars.length - 1].parentElement.remove();
   }
 }
