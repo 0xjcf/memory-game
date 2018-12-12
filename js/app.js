@@ -97,8 +97,9 @@ function gameWon() {
   const subHeading = document.createElement("p");
   // grab to display number of stars remaining
   const solidStars = stars.querySelectorAll(".fa-star");
-  subHeading.textContent = `With ${moveCount} Moves and
-  ${solidStars.length} stars remaining`;
+  const pluralize = solidStars.length === 1 ? `star` : `stars`;
+  subHeading.textContent = `With ${moveCount} moves and
+  ${solidStars.length} ${pluralize} remaining`;
   container.append(subHeading);
   // create button to play again
   const playAgainButton = document.createElement("button");
