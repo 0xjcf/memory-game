@@ -115,6 +115,8 @@ function gameWon() {
 }
 
 function restart() {
+  // remove all cards from openList
+  openList = [];
   // set move count to 0
   moveCount = 0;
   moves.textContent = `${moveCount} Moves`;
