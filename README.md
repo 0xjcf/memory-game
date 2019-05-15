@@ -13,6 +13,6 @@ The cards are arranged randomly with the symbol face down.
 
 *To download the project*
 - ```git clone git@github.com:JCFlores/memory-game.git```
-- ```npm install```
 - ```cd memory-game```
+- ```npm install```
 - ```open index.html```
